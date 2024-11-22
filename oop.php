@@ -136,7 +136,48 @@ echo "<br>";
 
 
 ?>
+<H1>靜態宣告</H1>
+<?php
 
+class rabbit extends Animal implements Behavior{
+    protected $type='rabbit';
+    protected $name='Doggy';
+    protected static  $count=0;
+    //static $count=0;
+
+    function __construct($hair_color){
+        $this->hair_color=$hair_color;
+        self::$count++;
+    }
+
+    function bark(){
+        echo $this->name . " is barking";
+    }
+
+    function getFeet(){
+        return $this->feet;
+    }
+
+    static function getCount(){
+        return self::$count;
+    }
+
+    function jump(){
+        echo $this->name . " jumpping 1m";
+    }
+}
+
+echo rabbit::getCount();
+
+$rabbit1=new rabbit('brown');
+$rabbit2=new rabbit('black');
+$rabbit3=new rabbit('orange');
+$rabbit4=new rabbit('white');
+$rabbit5=new rabbit('white');
+
+
+echo rabbit::getCount();
+?>
 </body>
 
 </html>
