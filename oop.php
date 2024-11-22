@@ -10,7 +10,11 @@
 <body>
     <h1>物件的宣告</h1>
     <?php
-
+Interface Behavior{
+  public function run();
+  public function speed();
+  public function jump();
+}
 class Animal{
 protected $type='animal';
 protected $name='John';
@@ -74,7 +78,9 @@ class Cat extends Animal{
     function __construct($hair_color){
         $this->hair_color=$hair_color;
     }
-
+    function jump(){
+      echo $this->name."jumpping 2m";
+    }
 
 }
 
@@ -90,7 +96,8 @@ echo "<br>";
 $mycat->setName("Judy");
 echo $mycat->getName();
 echo "<br>";
-
+echo $mycat->jump();
+echo "<br>";
 
 
 ?>
@@ -105,19 +112,18 @@ class dog extends Animal{
 
 
 }
-$mycat=new Cat('yellow');
+$mydog=new dog('yellow');
 
-$mycat->setName("Jacky");
-echo $mycat->getName();
-echo "<br>";
-echo $mycat->run();
-echo "<br>";
-echo $mycat->speed();
-echo "<br>";
-$mycat->setName("Jacky");
-echo $mycat->getName();
-echo "<br>";
 
+echo $mydog->getName();
+echo "<br>";
+echo $mydog->run();
+echo "<br>";
+echo $mydog->speed();
+echo "<br>";
+$mydog->setName("Jacky");
+echo $mydog->getName();
+echo "<br>";
 
 
 
