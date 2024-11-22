@@ -42,6 +42,9 @@ protected $feet=['front-left','front-right','back-left','back-right'];
   public function setName($name){
     $this->name=$name;
   }
+  public function jump(){
+    echo $this->name . " jumpping 2m";;
+  }
 }
 
 //實例化(instance)
@@ -49,13 +52,17 @@ $cat=new Animal('cat','Kitty','white');
 
 //echo $cat->type;
 echo $cat->getname();
+echo "<br>";
 //echo $cat->hair_color;
 echo $cat->run();
+echo "<br>";
 echo $cat->speed();
+echo "<br>";
 //print_r($cat->feet)
-$cat->setName('joson');
+$cat->setName('jason');
 echo $cat->getName();
-
+echo "<br>";
+echo $cat->jump();
 
 
 
@@ -79,7 +86,7 @@ class Cat extends Animal{
         $this->hair_color=$hair_color;
     }
     function jump(){
-      echo $this->name."jumpping 2m";
+      echo $this->name . " jumpping 2m";;
     }
 
 }
