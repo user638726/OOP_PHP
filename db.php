@@ -28,9 +28,34 @@
         }
         return $this->fetchAll($sql);
     }
+    //撈出單筆資料
 
-
-    //把陣列轉成條件字串陣列
+    function find($id){
+        $sql="SELECT * FROM $this->table ";
+             if(is_array($id)){
+                  $where=$this->a2s($id);
+                  $sql=$sql . " WHERE ". join(" && ",$where);
+            }else{
+                //$sql=$sql.$arg[0];
+                $sql .= " WHERE `id`='$id'";
+            }
+        
+        
+        return $this->fetchOne($sql);
+    }
+    function del($id){
+        $sql="DELETE FROM $this->table ";
+             if(is_array($id)){
+                  $where=$this->a2s($id);
+                  $sql=$sql . " WHERE ". join(" && ",$where);
+            }else{
+                //$sql=$sql.$arg[0];
+                $sql .= " WHERE `id`='$id'";
+            }
+        echo $sql;
+        
+        return $this->pdo->exec($sql);
+    }//把陣列轉成條件字串陣列
      function a2s($array){
         $tmp=[];
         foreach($array as $key => $value){
@@ -40,11 +65,11 @@
      }
      function fetchOne($sql){
         //echo $sql;
-          return $this->pdo->query($sql)->fetch();
+          return $this->pdo->query($sql)->fetch(PDO::FETCH_ASSOC);
      }
      function fetchAll($sql){
        //echo $sql;
-       return $this->pdo->query($sql)->fetchAll();
+       return $this->pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
      }
      
 }
@@ -59,7 +84,8 @@ function dd($array){
      } 
        $DEPT=new DB('imgs');
        //$dept=$DEPT->q("SELECT * FROM imgs");
-       $dept=$DEPT->all(" Order by `id` DESC");
+       $dept=$DEPT->find(6);
+       //$DEPT->del(5);
        dd($dept);
-   
+   //['sh'=>'2']
 ?>
