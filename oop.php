@@ -174,9 +174,18 @@ $rabbit2=new rabbit('black');
 $rabbit3=new rabbit('orange');
 $rabbit4=new rabbit('white');
 $rabbit5=new rabbit('white');
-
-
 echo rabbit::getCount();
+
+echo $rabbit1->bark();
+echo "<br>";
+echo $rabbit1->jump();
+echo "<br>";
+print_r($rabbit1->getfeet());
+
+
+
+
+
 ?>
 </body>
 
