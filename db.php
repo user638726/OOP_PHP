@@ -43,6 +43,26 @@
         
         return $this->fetchOne($sql);
     }
+    function save($array){
+            if(isset($array['id'])){
+                //update
+                $id=$array['id'];
+                unset($array['id']);
+                $set=$this->a2s($array);
+                $sql ="UPDATE $this->table SET ".join(',',$set)." where `id`='$id'";
+                 echo $sql;
+            }else{
+                //insert
+                $cols=array_keys($array);
+                $sql="INSERT INTO $this->table (`".join("`,`",$cols)."`) VALUES('".join("','",$array)."')";
+                echo $sql;
+            }
+            
+            return $this->pdo->exec($sql);
+
+    }
+    
+    
     function del($id){
         $sql="DELETE FROM $this->table ";
              if(is_array($id)){
@@ -59,7 +79,7 @@
      function a2s($array){
         $tmp=[];
         foreach($array as $key => $value){
-            $tmp="`$key`='value'";
+            $tmp[]="`$key`='$value'";
         }
         return $tmp;
      }
@@ -84,8 +104,9 @@ function dd($array){
      } 
        $DEPT=new DB('imgs');
        //$dept=$DEPT->q("SELECT * FROM imgs");
-       $dept=$DEPT->find(6);
+       $dept=$DEPT->all();
        //$DEPT->del(5);
+       $DEPT->save(['id'=>'7','filename'=>'003.jpg']);
        dd($dept);
    //['sh'=>'2']
 ?>
