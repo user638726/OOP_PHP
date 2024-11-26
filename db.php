@@ -8,14 +8,30 @@
         $this->table=$table;
         $this->pdo=new PDO($this->dsn,'root','');
      }
-    function all(){
-
-        return $this->q("SELECT* FROM $this->table");
+     //撈出全部資料
+     //整張資料表
+     //有條件
+     //其他sql功能
+    function all(...$arg){
+        $sql="SELECT * FROM $this->table ";
+        if(!empty($arg[0])){
+            if(is_array($arg[0])){
+                  $where=$this->a2s($arg[0]);
+                  $sql=$sql . " WHERE ". join(" && ",$where);
+            }else{
+                //$sql=$sql.$arg[0];
+                $sql .= $arg[0];
+            }
+        }
+        if(!empty($arg[1])){
+            $sql=$sql . $arg[1];
+        }
+        return $this->fetchAll($sql);
     }
 
 
     //把陣列轉成條件字串陣列
-     function toWhere($array){
+     function a2s($array){
         $tmp=[];
         foreach($array as $key => $value){
             $tmp="`$key`='value'";
@@ -43,7 +59,7 @@ function dd($array){
      } 
        $DEPT=new DB('imgs');
        //$dept=$DEPT->q("SELECT * FROM imgs");
-       $dept=$DEPT->all();
+       $dept=$DEPT->all(" Order by `id` DESC");
        dd($dept);
    
 ?>
