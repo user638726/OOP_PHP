@@ -106,7 +106,7 @@ function dd($array){
        //$dept=$DEPT->q("SELECT * FROM imgs");
        $dept=$DEPT->all();
        //$DEPT->del(5);
-       $DEPT->save(['id'=>'7','filename'=>'003.jpg']);
+       $DEPT->save(['filename'=>'010.jpg','desc'=>'123']);
        dd($dept);
    //['sh'=>'2']
 ?>
