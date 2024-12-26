@@ -8,7 +8,48 @@
         $this->table=$table;
         $this->pdo=new PDO($this->dsn,'root','');
      }
-     //撈出全部資料
+     
+     //求id
+      function max($col,$where=[]){
+        return $this->math('max',$col,$where);
+     }
+     //有幾筆資料，如果有where[]，看條件有幾個
+     function count($where=[]){
+        return $this->math('count','*',$where);
+     }
+     //欄位相加
+     function sum($col,$where=[]){
+        return $this->math('sum',$col,$where);
+    }
+    //最小欄位
+    function min($col,$where=[]){
+        return $this->math('min',$col,$where);
+    }
+    //平均欄位
+    function avg($col,$where=[]){
+        return $this->avg('avg',$col,$where);
+    }    
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     //方便使用各個聚合函式
+     protected function math($math,$col='id',$where=[]){
+        $sql="SELECT $math($col) FROM $this->table";
+
+        if(!empty($where)){
+            $tmp=$this->a2s($where);
+            $sql=$sql . " WHERE " . join(" && ", $tmp);
+        }
+
+        return $this->pdo->query($sql)->fetchColumn();
+    }
+   //撈出全部資料
      //整張資料表
      //有條件
      //其他sql功能
@@ -83,11 +124,11 @@
         }
         return $tmp;
      }
-     function fetchOne($sql){
+     protected function fetchOne($sql){
         //echo $sql;
           return $this->pdo->query($sql)->fetch(PDO::FETCH_ASSOC);
      }
-     function fetchAll($sql){
+     protected function fetchAll($sql){
        //echo $sql;
        return $this->pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
      }
@@ -104,9 +145,23 @@ function dd($array){
      } 
        $DEPT=new DB('imgs');
        //$dept=$DEPT->q("SELECT * FROM imgs");
-       $dept=$DEPT->all();
+       //$dept=$DEPT->all();
        //$DEPT->del(5);
        //$DEPT->save(['filename'=>'010.jpg','desc'=>'123']);
-       dd($dept);
+       //dd($dept);
+       //echo $DEPT->math('max','id',['desc'=>'123']);
+       echo "<br>";
+       echo $DEPT->max('id',['desc'=>'123']);
+       echo "<br>";
+       echo $DEPT->count(['desc'=>'123']);
+       echo "<br>";
+       echo $DEPT->count();
+       echo "<br>";
+       echo $DEPT->sum('id');
+       echo "<br>";
+       echo $DEPT->min('id');
+       echo "<br>";
+       echo $DEPT->avg('id');
+       echo "<br>";
    //['sh'=>'2']
 ?>
